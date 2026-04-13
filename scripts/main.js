@@ -13,6 +13,21 @@ window.addEventListener('scroll', () => {
   }
 }, { passive: true });
 
+// ─── WHATSAPP FLOATING BUTTON ─────────────────────────────────
+const waFloat = document.getElementById('waFloat');
+
+// Show after 2s or after scrolling past hero
+setTimeout(() => {
+  if (waFloat) waFloat.classList.add('visible');
+}, 2000);
+
+window.addEventListener('scroll', () => {
+  if (!waFloat) return;
+  if (window.scrollY > 300) {
+    waFloat.classList.add('visible');
+  }
+}, { passive: true });
+
 // ─── MOBILE MENU ─────────────────────────────────────────────
 const burger = document.querySelector('.nav-burger');
 const navLinks = document.querySelector('.nav-links');

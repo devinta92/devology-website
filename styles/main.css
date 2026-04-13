@@ -1550,6 +1550,125 @@ h1, h2, h3, h4 {
   color: var(--c-text-dim);
 }
 
+/* ─── WHATSAPP FLOATING ──────────────────────────────────────── */
+.wa-float {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.wa-float.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wa-float__tooltip {
+  background: rgba(10, 10, 10, 0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.wa-float__tooltip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right: none;
+  border-left-color: rgba(255,255,255,0.1);
+}
+
+.wa-float:hover .wa-float__tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.wa-float__btn {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25D366;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(37, 211, 102, 0.4), 0 2px 8px rgba(0,0,0,0.3);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: wa-bounce 3s ease-in-out 2s infinite;
+}
+
+.wa-float__btn:hover {
+  background: #1ebe5c;
+  transform: scale(1.1);
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5), 0 4px 16px rgba(0,0,0,0.3);
+  animation: none;
+}
+
+.wa-float__btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes wa-bounce {
+  0%, 100%  { transform: translateY(0);   }
+  50%       { transform: translateY(-6px); }
+}
+
+.wa-float__notif {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--c-tertiary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--c-bg);
+  animation: notif-pop 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) 1s both;
+}
+
+@keyframes notif-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .wa-float {
+    bottom: 20px;
+    right: 20px;
+  }
+  .wa-float__btn {
+    width: 54px;
+    height: 54px;
+  }
+  .wa-float__tooltip {
+    display: none;
+  }
+}
+
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .services__grid {
