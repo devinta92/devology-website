@@ -178,6 +178,59 @@
   }
   </script>
 
+  <!-- ═══ WEBSITE + ORGANIZATION SCHEMA ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Devology Technology",
+    "url": "https://devology.id",
+    "description": "Jasa pembuatan website profesional untuk bisnis di Indonesia",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://devology.id/?s={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Devology Technology",
+    "url": "https://devology.id",
+    "logo": "https://devology.id/brand_assets/devology.png",
+    "image": "https://devology.id/brand_assets/og-image.png",
+    "telephone": "+6281219215091",
+    "email": "hello@devology.id",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Jakarta",
+      "addressRegion": "DKI Jakarta",
+      "addressCountry": "ID"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+6281219215091",
+      "contactType": "customer service",
+      "areaServed": "ID",
+      "availableLanguage": "Indonesian",
+      "contactOption": "TollFree"
+    },
+    "sameAs": [
+      "https://www.instagram.com/devology.id",
+      "https://www.linkedin.com/company/devology-technology",
+      "https://github.com/devinta92/devology-website"
+    ]
+  }
+  </script>
+
+  <!-- ═══ PERFORMANCE: DNS PREFETCH & PRELOAD ═══ -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="preload" href="styles/main.css" as="style" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Manrope:wght@800;900&family=Inter:wght@400;500&display=swap" as="style" />
+
   <!-- ═══ FONTS ═══ -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -205,8 +258,9 @@
     </div>
   </nav>
 
+  <main id="main-content">
   <!-- ════════════════════════════════════════ HERO ════════════════════════════════════════ -->
-  <section class="hero" id="hero">
+  <section class="hero" id="hero" aria-label="Devology Technology — Jasa Pembuatan Website Profesional">
     <div class="hero__grid-bg" aria-hidden="true"></div>
     <div class="hero__circuit" aria-hidden="true">
       <svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
@@ -239,8 +293,8 @@
         — Tanpa Ribet
       </h1>
       <p class="hero__sub reveal delay-2">
-        Kami bangun website modern, cepat, dan siap jual untuk bisnis kamu.<br />
-        Dari landing page sederhana hingga platform AI otomatis.
+        Jasa pembuatan website profesional untuk bisnis di Indonesia — modern, cepat, dan dioptimasi untuk konversi.<br />
+        Landing page, company profile, toko online, hingga platform dengan AI chatbot otomatis.
       </p>
       <div class="hero__ctas reveal delay-3">
         <a href="#contact" class="btn btn--primary btn--lg">
@@ -297,7 +351,7 @@
       <div class="section-header reveal">
         <span class="section-tag">Apa yang kami bangun</span>
         <h2 class="section-title">Bukan Sekedar Website.<br /><span class="text-gradient">Tapi Mesin Pertumbuhan Bisnis.</span></h2>
-        <p class="section-sub">Setiap website yang kami buat dirancang untuk mengkonversi pengunjung menjadi pelanggan.</p>
+        <p class="section-sub">Setiap website yang kami buat dirancang untuk mengkonversi pengunjung menjadi pelanggan. Dari jasa buat landing page, company profile, hingga toko online — semua dengan UI/UX premium dan performa terbaik.</p>
       </div>
       <div class="services__grid">
         <div class="service-card reveal delay-1">
@@ -862,6 +916,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ════════════════════════════════════════ FOOTER ════════════════════════════════════ -->
   <footer class="footer">
