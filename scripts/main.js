@@ -2,6 +2,140 @@
    DEVOLOGY TECHNOLOGY — Main JavaScript
 ════════════════════════════════════════════════════════════════ */
 
+// ─── GITHUB PORTFOLIO ────────────────────────────────────────
+const GITHUB_USER = 'devinta92';
+
+// Repos to skip (internal/boilerplate)
+const SKIP_REPOS = new Set([
+  'express-hello-world', 'CV', 'devology-website'
+]);
+
+// Language color map (GitHub colors)
+const LANG_COLORS = {
+  'HTML':       '#e34c26',
+  'CSS':        '#563d7c',
+  'JavaScript': '#f1e05a',
+  'TypeScript': '#3178c6',
+  'Python':     '#3572A5',
+  'PHP':        '#4F5D95',
+  'Vue':        '#41b883',
+  'React':      '#61dafb',
+};
+
+// Friendly repo name formatter
+function formatName(name) {
+  return name
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+// Time ago formatter
+function timeAgo(dateStr) {
+  const diff = (Date.now() - new Date(dateStr)) / 1000;
+  if (diff < 3600)  return `${Math.floor(diff/60)}m ago`;
+  if (diff < 86400) return `${Math.floor(diff/3600)}h ago`;
+  if (diff < 2592000) return `${Math.floor(diff/86400)}d ago`;
+  if (diff < 31536000) return `${Math.floor(diff/2592000)}mo ago`;
+  return `${Math.floor(diff/31536000)}y ago`;
+}
+
+function buildRepoCard(repo, index) {
+  const color = LANG_COLORS[repo.language] || '#5E72C3';
+  const desc  = repo.description || 'Website project oleh Devology Technology.';
+  const name  = formatName(repo.name);
+  const delay = (index % 3) * 0.08;
+
+  const liveBtn = repo.homepage
+    ? `<a href="${repo.homepage}" target="_blank" rel="noopener" class="repo-card__live" onclick="event.stopPropagation()">Live ↗</a>`
+    : '';
+
+  return `
+  <a class="repo-card" href="${repo.html_url}" target="_blank" rel="noopener"
+     style="animation-delay:${delay}s">
+    <div class="repo-card__header">
+      <div class="repo-card__icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <svg class="repo-card__arrow" width="16" height="16" viewBox="0 0 24 24"
+           fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+      </svg>
+    </div>
+    <h3 class="repo-card__name">${name}</h3>
+    <p class="repo-card__desc">${desc}</p>
+    <div class="repo-card__footer">
+      ${repo.language ? `
+      <div class="repo-card__lang">
+        <span class="lang-dot" style="background:${color}"></span>
+        ${repo.language}
+      </div>` : ''}
+      <div class="repo-card__stars">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        ${repo.stargazers_count}
+      </div>
+      <div class="repo-card__updated">${timeAgo(repo.updated_at)}</div>
+      ${liveBtn}
+    </div>
+  </a>`;
+}
+
+async function loadGithubRepos() {
+  const grid = document.getElementById('githubGrid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=12`
+    );
+    if (!res.ok) throw new Error('GitHub API error');
+
+    const repos = await res.json();
+    const filtered = repos.filter(r => !SKIP_REPOS.has(r.name) && !r.fork);
+
+    if (filtered.length === 0) {
+      grid.innerHTML = '<p class="gh-error">Belum ada project yang ditampilkan.</p>';
+      return;
+    }
+
+    grid.innerHTML = filtered
+      .slice(0, 6)
+      .map((repo, i) => buildRepoCard(repo, i))
+      .join('');
+
+    // Trigger reveal for the new cards
+    grid.querySelectorAll('.repo-card').forEach(el => revealObserver.observe(el));
+
+  } catch {
+    grid.innerHTML = `
+      <div class="gh-error">
+        <p>Tidak dapat memuat portfolio saat ini.</p>
+        <a href="https://github.com/${GITHUB_USER}" target="_blank" rel="noopener"
+           class="btn btn--outline" style="margin-top:16px;display:inline-flex">
+          Lihat di GitHub →
+        </a>
+      </div>`;
+  }
+}
+
+// Load repos when portfolio section enters viewport
+const portfolioSection = document.getElementById('portfolio');
+if (portfolioSection) {
+  const portfolioObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        loadGithubRepos();
+        portfolioObserver.disconnect();
+      }
+    },
+    { threshold: 0.1 }
+  );
+  portfolioObserver.observe(portfolioSection);
+}
+
 // ─── NAVBAR SCROLL ───────────────────────────────────────────
 const navbar = document.getElementById('navbar');
 
